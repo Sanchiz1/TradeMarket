@@ -39,6 +39,7 @@ namespace Business.Services
                     .Any(r => r.ReceiptDetails
                         .Any(rd => rd.ProductId == productId))));
         }
+
         public async Task AddAsync(CustomerModel model)
         {
             ModelValidatior.ValidateCustomerModel(model);

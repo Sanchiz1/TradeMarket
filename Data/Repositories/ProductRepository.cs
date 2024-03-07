@@ -31,7 +31,7 @@ namespace Data.Repositories
 
         public async Task<Product> GetByIdAsync(int id)
         {
-            return await _context.Products.FirstAsync(c => c.Id == id);
+            return await _context.Products.FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<Product> GetByIdWithDetailsAsync(int id)
@@ -39,11 +39,19 @@ namespace Data.Repositories
             return await _context.Products.Include(c => c.Category)
                 .Include(c => c.ReceiptDetails)
                 .ThenInclude(r => r.Receipt)
-                .FirstAsync(c => c.Id == id);
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task AddAsync(Product entity)
         {
+            if(entity.Category != null)
+            {
+                if(_context.ProductCategories.Any(c => c.Id == entity.Category.Id))
+                {
+                    entity.Category = null;
+                }
+            }
+
             await _context.Products.AddAsync(entity);
         }
 
@@ -59,7 +67,9 @@ namespace Data.Repositories
 
         public async Task DeleteByIdAsync(int id)
         {
-            var entity = await _context.Products.FirstAsync(c => c.Id == id);
+            var entity = await _context.Products.FirstOrDefaultAsync(c => c.Id == id);
+
+            if (entity == null) return;
 
             _context.Products.Remove(entity);
         }

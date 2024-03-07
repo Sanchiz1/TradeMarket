@@ -11,10 +11,12 @@ namespace Business.Validation
         {
             if (model == null) throw new MarketException("Customer cannot be empty");
 
+            if (model.DiscountValue < 0) throw new MarketException("Discount cannot be less than 0");
+
             if (String.IsNullOrEmpty(model.Name) ||
                 String.IsNullOrEmpty(model.Surname)) throw new MarketException("Invalid name or surname");
 
-            if (model.BirthDate <= DateTime.UtcNow.AddYears(-100) ||
+            if (model.BirthDate <= DateTime.UtcNow.AddYears(-150) ||
                 model.BirthDate >= DateTime.UtcNow.AddYears(-1)) throw new MarketException("Invalid birth date");
         }
 

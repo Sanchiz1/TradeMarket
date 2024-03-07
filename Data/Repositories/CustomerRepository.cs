@@ -32,7 +32,7 @@ namespace Data.Repositories
 
         public async Task<Customer> GetByIdAsync(int id)
         {
-            return await _context.Customers.FirstAsync(c => c.Id == id);
+            return await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<Customer> GetByIdWithDetailsAsync(int id)
@@ -40,7 +40,7 @@ namespace Data.Repositories
             return await _context.Customers.Include(c => c.Person)
                 .Include(c => c.Receipts)
                 .ThenInclude(r => r.ReceiptDetails)
-                .FirstAsync(c => c.Id == id);
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task AddAsync(Customer entity)
@@ -60,7 +60,7 @@ namespace Data.Repositories
 
         public async Task DeleteByIdAsync(int id)
         {
-            var entity = await _context.Customers.FirstAsync(c => c.Id == id);
+            var entity = await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
 
             _context.Customers.Remove(entity);
         }
