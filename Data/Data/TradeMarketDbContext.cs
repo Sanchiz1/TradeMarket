@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using System.Threading;
+using Microsoft.Extensions.Options;
 
 namespace Data.Data
 {
@@ -14,6 +15,13 @@ namespace Data.Data
         public TradeMarketDbContext(DbContextOptions<TradeMarketDbContext> options) : base(options)
         {
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TradeMarket;Trusted_Connection=True;");
+        }
+
+        public TradeMarketDbContext() { }
 
         public DbSet<Person> Persons {  get; set; }
         public DbSet<Customer> Customers {  get; set; }
