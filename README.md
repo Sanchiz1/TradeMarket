@@ -29,7 +29,7 @@ The structure of the BLL project in the final form:
 - The folder **Models** contains classes of logic’s models.
 - The folder **Interfaces** contains BLL service interfaces.
 - The folder **Services** contains service classes that implement interfaces from the folder **Interfaces**.
-- The root folder of the project contains **AutomapperProfile.cs** file to display DAL entities in the BLL model and opposite 
+- The root folder of the project contains **AutomapperProfile.cs** file to display DAL entities in the BLL model and opposite.
 ```
 Product <-> ProductModel
 Customer <-> CustomerModel
