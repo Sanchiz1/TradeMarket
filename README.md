@@ -1,20 +1,56 @@
-# Trade Market - BPL
+# Trade Market
 
 
 ## Domain description
 
 Supermarkets sell goods of various categories. The customers can shop anonymously or by logging in. When buying, a receipt is created with a list of goods purchased in a particular market.
 
+## Trade Market - DAL
 
-## Task
+Data Access Layer (DAL) for an electronic system **"Trade Market"** with Three-Layer Architecture in dynamic library form named “Data”.
 
-Make a Web Application (Presentation Layer, PL) for the electronic system **"Trade Market"** with a Three-Layer Architecture as an asp.net application named WebAPI with functionality according route list bellow. Data Access Layer (DAL) is used from the Trade Market task – DAL, Business Logic Layer (BLL) is used from the Trade Market task – BLL.
+![Data Entities](/Data/DataEntities_Scheme.jpeg)
+
+The structure of the DAL project in the final form:
+- The folder **Entities** contains classes of entities. Every entity inherits **BaseEntity { int Id }**.
+- The folder **Interfaces** contains repository interfaces of entities and the interface of their merge point.
+- The folder **Repositories** contains repository classes that implement interfaces from the folder **Interfaces**.
+- The root folder of the project contains **MarketDBContext.cs** file for project entity context.
+- The root folder of the project contains **UnitOfWork.cs** file. This class is entry point for all repositories to get access to DAL from the business logic.
+- The folder **Migrations** contains project database migration files.  
+Instructions on **how to create migrations** can be found in file **_Data / Migrations_Overview.md_.**
+
+
+## Trade Market - BLL
+
+Business Logic Layer (BLL) for the electronic system **"Trade Market"** with a three-layered architecture in the form of dynamic library called “Business”. Data Access Layer (DAL) is used from the Trade Market task – DAL.
+
+The structure of the BLL project in the final form:
+- The folder **Models** contains classes of logic’s models.
+- The folder **Interfaces** contains BLL service interfaces.
+- The folder **Services** contains service classes that implement interfaces from the folder **Interfaces**.
+- The root folder of the project contains **AutomapperProfile.cs** file to display DAL entities in the BLL model and opposite 
+```
+Product <-> ProductModel
+Customer <-> CustomerModel
+Receipt <-> ReceiptModel
+ReceiptDetail <-> ReceiptDetailModel,
+ProductCategory <-> ProductCategoryModel
+```
+- The folder **Validation** which contains **MarketException.cs** file – the class of user exception **MarketException**.
+
+![Business Entities](/Business/BusinessModels_Scheme.jpeg)
+
+
+## Trade Market - BPL
+
+Web Application (Presentation Layer, PL) for the electronic system **"Trade Market"** with a Three-Layer Architecture as an asp.net application named WebAPI with functionality according route list bellow. Data Access Layer (DAL) is used from the Trade Market task – DAL, Business Logic Layer (BLL) is used from the Trade Market task – BLL.
 The structure of the PL project in the final form:
 
-- The folder **Controllers** contains Web API classes of controllers. Implement controller methods **ProductsController**. Develop and implement classes of controllers **Customers**, **Receipt**, **Statistic** according to the list of routes.
-- The project root folder contains file **appsettings.Development.json**.  Make a connection string named **“Market”**.
-- The project root folder contains **Startup.cs** file. For the level DAL and BLL make DI at the **ConfigureServices** method in **Startup** class. Configure the connection string named **“Market”**. Configure automapper.
-- Use **Swagger** to self-document the Web Api.
+- The folder **Controllers** contains Web API classes of controllers.
+- The project root folder contains file **appsettings.Development.json**.
+- The project root folder contains **Startup.cs** file.
+- Using **Swagger** to self-document the Web Api.
 
 
 Route List:
