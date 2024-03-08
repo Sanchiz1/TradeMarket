@@ -72,7 +72,6 @@ namespace WebApi
 
             if (env.IsDevelopment())
             {
-                //app.UseDeveloperExceptionPage();
                 using (var scope = app.ApplicationServices.CreateScope())
                 using (var context = scope.ServiceProvider.GetService<TradeMarketDbContext>())
                     context.Database.EnsureCreated();

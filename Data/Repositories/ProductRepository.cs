@@ -44,12 +44,9 @@ namespace Data.Repositories
 
         public async Task AddAsync(Product entity)
         {
-            if(entity.Category != null)
+            if (entity.Category != null && _context.ProductCategories.Any(c => c.Id == entity.Category.Id))
             {
-                if(_context.ProductCategories.Any(c => c.Id == entity.Category.Id))
-                {
-                    entity.Category = null;
-                }
+                entity.Category = null;
             }
 
             await _context.Products.AddAsync(entity);
