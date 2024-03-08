@@ -16,13 +16,6 @@ namespace Data.Data
         {
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=TradeMarket;Trusted_Connection=True;");
-        }
-
-        public TradeMarketDbContext() { }
-
         public DbSet<Person> Persons {  get; set; }
         public DbSet<Customer> Customers {  get; set; }
         public DbSet<Receipt> Receipts {  get; set; }
