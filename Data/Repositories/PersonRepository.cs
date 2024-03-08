@@ -44,7 +44,9 @@ namespace Data.Repositories
 
         public async Task DeleteByIdAsync(int id)
         {
-            var entity = await _context.Persons.FirstAsync(c => c.Id == id);
+            var entity = await _context.Persons.FirstOrDefaultAsync(c => c.Id == id);
+
+            if (entity == null) return;
 
             _context.Persons.Remove(entity);
         }

@@ -30,7 +30,7 @@ namespace Data.Repositories
 
         public async Task<ReceiptDetail> GetByIdAsync(int id)
         {
-            return await _context.ReceiptsDetails.FirstAsync(c => c.Id == id);
+            return await _context.ReceiptsDetails.FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task AddAsync(ReceiptDetail entity)
@@ -50,7 +50,9 @@ namespace Data.Repositories
 
         public async Task DeleteByIdAsync(int id)
         {
-            var entity = await _context.ReceiptsDetails.FirstAsync(c => c.Id == id);
+            var entity = await _context.ReceiptsDetails.FirstOrDefaultAsync(c => c.Id == id);
+
+            if (entity == null) return;
 
             _context.ReceiptsDetails.Remove(entity);
         }

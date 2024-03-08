@@ -23,9 +23,11 @@ namespace Business.Services
         {
             var receipts = await _unitOfWork.ReceiptRepository.GetAllWithDetailsAsync();
 
+            receipts = receipts.Where(r => r.CustomerId == customerId);
+
             var receiptDetails = receipts.SelectMany(r => r.ReceiptDetails);
 
-            var products = receiptDetails.GroupBy(r => r.Product).OrderByDescending(r => r.Sum(r => r.Quantity)).Select(g => g.Key).Take(3);
+            var products = receiptDetails.GroupBy(r => r.Product).OrderByDescending(r => r.Sum(r => r.Quantity)).Select(g => g.Key).Take(productCount);
 
             return _mapper.Map<IEnumerable<ProductModel>>(
                 (products));
@@ -35,7 +37,7 @@ namespace Business.Services
         {
             var receipts = await _unitOfWork.ReceiptRepository.GetAllWithDetailsAsync();
 
-            receipts = receipts.Where(r => r.OperationDate >= startDate && r.OperationDate <= endDate);
+            receipts = receipts.Where(r => r.OperationDate >= startDate && r.OperationDate <= endDate && r.ReceiptDetails != null);
 
             var receiptDetails = receipts.SelectMany(r => r.ReceiptDetails);
 

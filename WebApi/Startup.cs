@@ -59,6 +59,8 @@ namespace WebApi
 
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IReceiptService, ReceiptService>();
+            services.AddScoped<IStatisticService, StatisticService>();
 
 
         }

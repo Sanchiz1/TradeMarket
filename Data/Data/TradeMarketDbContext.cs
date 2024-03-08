@@ -21,5 +21,11 @@ namespace Data.Data
         public DbSet<ReceiptDetail> ReceiptsDetails {  get; set; }
         public DbSet<Product> Products {  get; set; }
         public DbSet<ProductCategory> ProductCategories {  get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ReceiptDetail>()
+                .HasKey(rd => new { rd.ReceiptId, rd.ProductId });
+        }
     }
 }

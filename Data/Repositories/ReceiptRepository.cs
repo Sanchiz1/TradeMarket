@@ -25,6 +25,7 @@ namespace Data.Repositories
         public async Task<IEnumerable<Receipt>> GetAllWithDetailsAsync()
         {
             return await _context.Receipts.Include(c => c.Customer)
+                .ThenInclude(c => c.Person)
                 .Include(c => c.ReceiptDetails)
                 .ThenInclude(r => r.Product)
                 .ThenInclude(r => r.Category)
@@ -42,7 +43,7 @@ namespace Data.Repositories
                 .Include(c => c.ReceiptDetails)
                 .ThenInclude(r => r.Product)
                 .ThenInclude(r => r.Category)
-                .FirstAsync(c => c.Id == id);
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public Task<decimal> ToPayAsync(int receiptId)
@@ -67,7 +68,9 @@ namespace Data.Repositories
 
         public async Task DeleteByIdAsync(int id)
         {
-            var entity = await _context.Receipts.FirstAsync(c => c.Id == id);
+            var entity = await _context.Receipts.FirstOrDefaultAsync(c => c.Id == id);
+
+            if (entity == null) return;
 
             _context.Receipts.Remove(entity);
         }

@@ -62,6 +62,8 @@ namespace Data.Repositories
         {
             var entity = await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
 
+            if (entity == null) return;
+
             _context.Customers.Remove(entity);
         }
     }

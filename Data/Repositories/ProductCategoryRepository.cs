@@ -22,7 +22,7 @@ namespace Data.Repositories
 
         public async Task<ProductCategory> GetByIdAsync(int id)
         {
-            return await _context.ProductCategories.FirstAsync(c => c.Id == id);
+            return await _context.ProductCategories.FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task AddAsync(ProductCategory entity)
@@ -42,7 +42,9 @@ namespace Data.Repositories
 
         public async Task DeleteByIdAsync(int id)
         {
-            var entity = await _context.ProductCategories.FirstAsync(c => c.Id == id);
+            var entity = await _context.ProductCategories.FirstOrDefaultAsync(c => c.Id == id);
+
+            if (entity == null) return;
 
             _context.ProductCategories.Remove(entity);
         }
